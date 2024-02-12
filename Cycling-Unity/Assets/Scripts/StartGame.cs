@@ -1,18 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class StartGame : MonoBehaviour
+namespace Cycling.Game
 {
-    // Start is called before the first frame update
-    void Start()
+    public class StartGame : MonoBehaviour
     {
-        
-    }
+        private Race _race;
+        private void Start()
+        {
+            var raceSettings = new RaceSettings();
+            _race = new Race(raceSettings);
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        private void Update()
+        {
+            _race.Tick();
+        }
     }
 }
