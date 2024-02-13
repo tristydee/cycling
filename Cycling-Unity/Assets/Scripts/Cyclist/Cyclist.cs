@@ -22,12 +22,12 @@ namespace Cycling.Game
         public void MoveToStartingLine()
         {
             //todo: need to take into account other cyclists. There should be a test for this.
-            Position.Value = _course.Nodes[0];
+            Position.Value = _course.Lanes[0][0];
         }
 
         public void Tick()
         {
-            var nextNode = _course.Nodes[_currentNodeIndex + 1] ;
+            var nextNode = _course.Lanes[0][_currentNodeIndex + 1] ;
             var direction = nextNode - Position.Value;
             Position.Value += direction * Speed.Value;
         }

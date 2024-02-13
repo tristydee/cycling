@@ -5,7 +5,7 @@ namespace Cycling.Game
     public class Race
     {
         private RaceSettings _settings;
-        private List<Cyclist> Cyclists => _settings.Cyclists;
+        public List<Cyclist> Cyclists => _settings.Cyclists;
 
         public Race(RaceSettings settings)
         {
