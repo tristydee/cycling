@@ -6,30 +6,37 @@ namespace Cycling.Game
     {
         public Speed Speed = new Speed();
         public Position Position = new Position();
-        
+        public Endurance Endurance = new Endurance();
+
         private readonly RaceCourse _course;
         private readonly List<Cyclist> _cyclists;
 
 
-        private int _currentNodeIndex = 0;
 
         public Cyclist(RaceSettings raceSettings)
         {
             _course = raceSettings.Course;
             _cyclists = raceSettings.Cyclists;
+            
+            Speed.Init(raceSettings,this);
+            Position.Init(raceSettings, this);
+            Endurance.Init(raceSettings,this);
+            
         }
 
         public void MoveToStartingLine()
         {
+            //todo: this should be in position.init
             //todo: need to take into account other cyclists. There should be a test for this.
-            Position.Value = _course.Lanes[0][0];
+            
         }
 
         public void Tick()
         {
-            var nextNode = _course.Lanes[0][_currentNodeIndex + 1] ;
-            var direction = nextNode - Position.Value;
-            Position.Value += direction * Speed.Value;
+            Speed.Tick();
+            Endurance.Tick();
+            Position.Tick();
+            
         }
         
     }

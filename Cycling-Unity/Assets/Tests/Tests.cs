@@ -37,6 +37,7 @@ public class Tests
         var raceSettings = CreateRaceSettingsWithCyclistsAndSimpleCourse(2);
         var race = new Race(raceSettings);
         race.Init();
+        Assert.IsTrue(false);
         //todo: need to implement this in cyclist.init...
     }
     
@@ -45,17 +46,59 @@ public class Tests
     {
         var raceSettings = CreateRaceSettingsWithCyclistsAndSimpleCourse(1);
         var cyclist = raceSettings.Cyclists[0];
+        InitRaceAndRun(raceSettings, cyclist);
+        Assert.IsTrue(IsSamePosition(cyclist.Position.Value, raceSettings.Course.Lanes[0][1]));
+    }
+
+    
+
+    [Test]
+    public void EnduranceIsReducedWhenCyclistMoves()
+    {
+        var raceSettings = CreateRaceSettingsWithCyclistsAndSimpleCourse(1);
+        var cyclist = raceSettings.Cyclists[0];
+        var startingEndurance = cyclist.Endurance.Value;
+       
+        InitRaceAndRun(raceSettings,cyclist);
+        var endEndurance = cyclist.Endurance.Value;
+        
+        Assert.IsTrue(startingEndurance > endEndurance);
+    }
+    
+    [Test]
+    public void MoreEnduranceIsUsedToGoFaster()
+    {
+        //todo
+        var raceSettings = CreateRaceSettingsWithCyclistsAndSimpleCourse(1);
+        var cyclist = raceSettings.Cyclists[0];
+        var startingEndurance = cyclist.Endurance.Value;
+        var endEndurance = cyclist.Endurance.Value;
+        
+        InitRaceAndRun(raceSettings,cyclist);
+        
+        Assert.IsTrue(startingEndurance > endEndurance);
+    }
+
+    [Test]
+    public void CyclistsDontOverlap()
+    {
+        var raceSettings = CreateRaceSettingsWithCyclistsAndSimpleCourse(1);
+        var cyclist1 = raceSettings.Cyclists[0];
+        var cyclist2 = raceSettings.Cyclists[1];
+        //todo: should slow down the second one if it can't overtake
+        Assert.IsTrue(false);
+
+    }
+
+    private static void InitRaceAndRun(RaceSettings raceSettings, Cyclist cyclist)
+    {
         var race = new Race(raceSettings);
         race.Init();
-        
-        cyclist.Speed.Value = .1f;
         
         for (int i = 0; i < 1000; i++)
         {
             race.Tick();    
         }
-        
-        Assert.IsTrue(IsSamePosition(cyclist.Position.Value, raceSettings.Course.Lanes[0][1]));
     }
 
     private RaceSettings CreateRaceSettingsWithCyclistsAndSimpleCourse(int numCyclists)
