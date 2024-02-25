@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace Cycling.Game
 {
@@ -9,13 +10,14 @@ namespace Cycling.Game
         
         public override void Init(RaceSettings raceSettings, Cyclist cyclist)
         {
+            base.Init(raceSettings,cyclist);
+            SpeedEnduranceCurve = Addressables.LoadAssetAsync<CurveReference>("FatigueCurve").WaitForCompletion().Curve;
         }
 
         public override void Tick()
         {
             maxSpeed = SpeedEnduranceCurve.Evaluate(cyclist.Endurance.Value / cyclist.Endurance.StartingValue);
             Value = maxSpeed;
-            //speed is determined by AI...
         }
         
     }

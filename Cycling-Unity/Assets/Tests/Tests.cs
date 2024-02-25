@@ -68,13 +68,13 @@ public class Tests
     [Test]
     public void MoreEnduranceIsUsedToGoFaster()
     {
-        //todo
         var raceSettings = CreateRaceSettingsWithCyclistsAndSimpleCourse(1);
         var cyclist = raceSettings.Cyclists[0];
         var startingEndurance = cyclist.Endurance.Value;
-        var endEndurance = cyclist.Endurance.Value;
         
         InitRaceAndRun(raceSettings,cyclist);
+        
+        var endEndurance = cyclist.Endurance.Value;
         
         Assert.IsTrue(startingEndurance > endEndurance);
     }

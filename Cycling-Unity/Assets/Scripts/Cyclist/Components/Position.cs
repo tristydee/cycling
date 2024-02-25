@@ -9,7 +9,7 @@ namespace Cycling.Game
         public override void Init(RaceSettings raceSettings, Cyclist cyclist)
         {
             base.Init(raceSettings, cyclist);
-            //todo: need to chane position based off of whether there are other cyclists there already
+            //todo: need to change position based off of whether there are other cyclists there already
             Value = Settings.Course.Lanes[0][0];
         }
 

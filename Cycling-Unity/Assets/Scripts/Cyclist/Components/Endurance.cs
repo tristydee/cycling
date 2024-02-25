@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 
 namespace Cycling.Game
@@ -12,15 +13,13 @@ namespace Cycling.Game
         {
             base.Init(raceSettings, cyclist);
             Value = StartingValue;
-            //todo: why can't I fucking reference addressables here.
-            // FatigueCurve = UnityEngine.Addressables.
+            FatigueCurve = Addressables.LoadAssetAsync<CurveReference>("FatigueCurve").WaitForCompletion().Curve;
         }
 
 
         public override void Tick()
         {
-            Value -= .1f;
-            // Value -= FatigueCurve.Evaluate(cyclist.Speed.Value);
+            Value -= FatigueCurve.Evaluate(cyclist.Speed.Value);
         }
     }
 }
