@@ -12,7 +12,7 @@ public class Tests
     [Test]
     public void OneCyclistIsPlacedAtStartingLine()
     {
-        var raceSettings = CreateRaceSettingsWithCyclistsAndSimpleCourse(1);
+        var raceSettings = CreateRaceSettingsWithCyclistsAndSimpleCourse(CreateRouleur(),1);
         var cyclist = raceSettings.Cyclists[0];
         var race = new Race(raceSettings);
         race.Init();
@@ -34,7 +34,7 @@ public class Tests
     [Test]
     public void TwoCyclistsArePlacedAtStartingLine()
     {
-        var raceSettings = CreateRaceSettingsWithCyclistsAndSimpleCourse(2);
+        var raceSettings = CreateRaceSettingsWithCyclistsAndSimpleCourse(CreateRouleurAndSprinter(),2);
         var race = new Race(raceSettings);
         race.Init();
         Assert.IsTrue(false);
@@ -44,7 +44,7 @@ public class Tests
     [Test]
     public void TestPlayerCanReachEndOfStraightLine()
     {
-        var raceSettings = CreateRaceSettingsWithCyclistsAndSimpleCourse(1);
+        var raceSettings = CreateRaceSettingsWithCyclistsAndSimpleCourse(CreateRouleur(),1);
         var cyclist = raceSettings.Cyclists[0];
         InitRaceAndRun(raceSettings, cyclist);
         Assert.IsTrue(IsSamePosition(cyclist.Position.Value, raceSettings.Course.Lanes[0][1]));
@@ -55,11 +55,11 @@ public class Tests
     [Test]
     public void EnduranceIsReducedWhenCyclistMoves()
     {
-        var raceSettings = CreateRaceSettingsWithCyclistsAndSimpleCourse(1);
+        var raceSettings = CreateRaceSettingsWithCyclistsAndSimpleCourse(CreateRouleur(),1);
         var cyclist = raceSettings.Cyclists[0];
+        var race = InitRace(raceSettings);
         var startingEndurance = cyclist.Endurance.Value;
-       
-        InitRaceAndRun(raceSettings,cyclist);
+        RunRace(race);
         var endEndurance = cyclist.Endurance.Value;
         
         Assert.IsTrue(startingEndurance > endEndurance);
@@ -68,46 +68,53 @@ public class Tests
     [Test]
     public void MoreEnduranceIsUsedToGoFaster()
     {
-        var raceSettings = CreateRaceSettingsWithCyclistsAndSimpleCourse(1);
-        var cyclist = raceSettings.Cyclists[0];
-        var startingEndurance = cyclist.Endurance.Value;
-        
-        InitRaceAndRun(raceSettings,cyclist);
-        
-        var endEndurance = cyclist.Endurance.Value;
-        
-        Assert.IsTrue(startingEndurance > endEndurance);
+        var raceSettings = CreateRaceSettingsWithCyclistsAndSimpleCourse(CreateRouleurAndSprinter(), 2);
+        var race = InitRace(raceSettings);
+        RunRace(race);
+        var endEnduranceSlowCyclist = raceSettings.Cyclists[0].Endurance.Value;
+        var endEnduranceFastCyclist = raceSettings.Cyclists[1].Endurance.Value;
+        Assert.IsTrue(endEnduranceSlowCyclist > endEnduranceFastCyclist);
     }
 
-    [Test]
-    public void CyclistsDontOverlap()
+    private List<Cyclist> CreateRouleur()
     {
-        var raceSettings = CreateRaceSettingsWithCyclistsAndSimpleCourse(1);
-        var cyclist1 = raceSettings.Cyclists[0];
-        var cyclist2 = raceSettings.Cyclists[1];
-        //todo: should slow down the second one if it can't overtake
-        Assert.IsTrue(false);
-
+        return new List<Cyclist> { new Rouleur() };
     }
+    
+    private List<Cyclist> CreateRouleurAndSprinter()
+    {
+        return new List<Cyclist> { new Rouleur(), new Sprinter() };
+    }
+
 
     private static void InitRaceAndRun(RaceSettings raceSettings, Cyclist cyclist)
     {
-        var race = new Race(raceSettings);
-        race.Init();
-        
+        var race = InitRace(raceSettings);
+        RunRace(race);
+    }
+
+    private static void RunRace(Race race)
+    {
         for (int i = 0; i < 1000; i++)
         {
             race.Tick();    
         }
     }
 
-    private RaceSettings CreateRaceSettingsWithCyclistsAndSimpleCourse(int numCyclists)
+    private static Race InitRace(RaceSettings raceSettings)
     {
+        var race = new Race(raceSettings);
+        race.Init();
+        return race;
+    }
+
+    private RaceSettings CreateRaceSettingsWithCyclistsAndSimpleCourse(List<Cyclist> cyclists, int numLanes)
+    {
+        //this method should take the types of cyclists as parameters
         var raceSettings = new RaceSettings();
-        raceSettings.Course = CreateSimpleCourse(1);
-        for (int i = 0; i < numCyclists; i++)
+        raceSettings.Course = CreateSimpleCourse(numLanes);
+        foreach (var cyclist in cyclists)
         {
-            var cyclist = new Cyclist(raceSettings);
             raceSettings.Cyclists.Add(cyclist);
         }
 

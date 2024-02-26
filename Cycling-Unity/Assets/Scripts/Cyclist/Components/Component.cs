@@ -16,5 +16,10 @@ namespace Cycling.Game
         }
 
         public abstract void Tick();
+
+        protected string GetSettingsSuffix()
+        {
+            return cyclist.GetType().Name;
+        }
     }
 }

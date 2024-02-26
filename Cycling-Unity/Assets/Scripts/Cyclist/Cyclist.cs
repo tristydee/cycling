@@ -8,26 +8,18 @@ namespace Cycling.Game
         public Position Position = new Position();
         public Endurance Endurance = new Endurance();
 
-        private readonly RaceCourse _course;
-        private readonly List<Cyclist> _cyclists;
+        private RaceCourse _course;
+        private List<Cyclist> _cyclists;
+        private RaceSettings _raceSettings;
 
-
-
-        public Cyclist(RaceSettings raceSettings)
+        public void Init(RaceSettings raceSettings)
         {
             _course = raceSettings.Course;
             _cyclists = raceSettings.Cyclists;
-            
-            Speed.Init(raceSettings,this);
-            Position.Init(raceSettings, this);
-            Endurance.Init(raceSettings,this);
-            
-        }
-
-        public void MoveToStartingLine()
-        {
-            //todo: this should be in position.init
-            //todo: need to take into account other cyclists. There should be a test for this.
+            _raceSettings = raceSettings;
+            Speed.Init(_raceSettings,this);
+            Position.Init(_raceSettings, this);
+            Endurance.Init(_raceSettings,this);
             
         }
 

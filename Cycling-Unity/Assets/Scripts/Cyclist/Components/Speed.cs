@@ -11,7 +11,7 @@ namespace Cycling.Game
         public override void Init(RaceSettings raceSettings, Cyclist cyclist)
         {
             base.Init(raceSettings,cyclist);
-            SpeedEnduranceCurve = Addressables.LoadAssetAsync<CurveReference>("FatigueCurve").WaitForCompletion().Curve;
+            SpeedEnduranceCurve = Addressables.LoadAssetAsync<CurveReference>($"SpeedEnduranceCurve_{GetSettingsSuffix()}").WaitForCompletion().Curve;
         }
 
         public override void Tick()

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 41bf03a61a1b4115975b464229779625, type: 3}
-  m_Name: FatigueCurve
+  m_Name: SpeedEnduranceCurve_Rouleur
   m_EditorClassIdentifier: 
   Curve:
     serializedVersion: 2
@@ -26,7 +26,7 @@ MonoBehaviour:
       outWeight: 0
     - serializedVersion: 3
       time: 1
-      value: 1
+      value: 0.91981125
       inSlope: 2
       outSlope: 2
       tangentMode: 0

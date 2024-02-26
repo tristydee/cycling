@@ -18,12 +18,22 @@ MonoBehaviour:
   m_GUID: 6220e17cd2faf4963a2272018968cb84
   m_SerializeEntries:
   - m_GUID: 8d49df80eee354eeb8d92f8da8b8f29f
-    m_Address: FatigueCurve
+    m_Address: FatigueCurve_Rouleur
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 62543088ac0234764a5704c113df7bfe
-    m_Address: SpeedEnduranceCurve
+    m_Address: SpeedEnduranceCurve_Rouleur
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c8e0b5dbbb1c045918b453fd9e3bc9a0
+    m_Address: FatigueCurve_Sprinter
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 67711ad48be4c4c0085d99bde7a46b3c
+    m_Address: SpeedEnduranceCurve_Sprinter
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

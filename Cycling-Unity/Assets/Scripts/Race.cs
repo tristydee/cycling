@@ -14,12 +14,12 @@ namespace Cycling.Game
 
         public void Init()
         {
-            MoveCyclistsToStartingLine();
+            InitCyclists();
         }
 
-        private void MoveCyclistsToStartingLine()
+        private void InitCyclists()
         {
-            _settings.Cyclists.ForEach(c => c.MoveToStartingLine());
+            _settings.Cyclists.ForEach(c => c.Init(_settings));
         }
         
         public void Tick()

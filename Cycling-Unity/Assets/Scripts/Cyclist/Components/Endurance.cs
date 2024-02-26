@@ -13,7 +13,7 @@ namespace Cycling.Game
         {
             base.Init(raceSettings, cyclist);
             Value = StartingValue;
-            FatigueCurve = Addressables.LoadAssetAsync<CurveReference>("FatigueCurve").WaitForCompletion().Curve;
+            FatigueCurve = Addressables.LoadAssetAsync<CurveReference>($"FatigueCurve_{GetSettingsSuffix()}").WaitForCompletion().Curve;
         }
 
 
